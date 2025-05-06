@@ -76,12 +76,16 @@
 
 ```mermaid
 graph TD
-    A[SplashActivity] -->|인터넷 체크| B[MainActivity]
-    B -->|날짜 선택| C[DailyGamesFragment]
-    C -->|경기 선택| D[HighlightActivity]
-    D -->|선수 교체| E[ChangeMemberActivity]
-    E -->|선수 선택| F[MyPickActivity]
-    F -->|시뮬레이션| G[ResultActivity]
+   A[SplashActivity] -->|인터넷 연결 확인| B{인터넷 연결}
+    B -->|연결 안됨| C[오프라인 모드]
+    B -->|연결됨| D[MainActivity]
+    D -->|날짜 선택| E[DailyGamesFragment]
+    E -->|경기 선택| F[HighlightActivity]
+    F -->|선수 교체| G[ChangeMemberActivity]
+    G -->|선수 선택| H[MyPickActivity]
+    H -->|시뮬레이션 실행| I[ResultActivity]
+    I -->|결과 확인| J[결과 저장]
+    C -->|연결 복구| B
 ```
 
 ### 📱 주요 화면 흐름
