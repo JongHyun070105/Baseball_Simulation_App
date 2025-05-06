@@ -10,27 +10,119 @@
 ## 📋 프로젝트 소개
 이 프로젝트는 야구 경기 시뮬레이션을 위한 Android 애플리케이션입니다. 실제 야구 경기의 상황을 시뮬레이션하고, 선수 교체에 따른 승률 변화를 예측하는 기능을 제공합니다. AI 기술을 활용하여 선수들의 성적과 경기 상황을 분석하여 더 정확한 시뮬레이션 결과를 제공합니다.
 
-## ⚾ 주요 기능
-### 📅 일별 야구 경기 일정 조회
-- 2024 시즌 경기 일정 제공 (3월 23일 ~ 10월 1일)
+## 🎯 주요 기능
+### ⚾ 경기 시뮬레이션
+- **실시간 상황 분석**
+  - 이닝별 상황 파악
+  - 베이스 상황 표시
+  - 아웃 카운트 관리
+  - 점수 표시
 
-### 🎮 실시간 경기 상황 시뮬레이션
-- 이닝별 상황 분석
-- 베이스 상황 표시
-- 아웃 카운트 관리
+- **선수 교체 시뮬레이션**
+  - 타자/투수 교체 시 승률 변화 예측
+  - 선수별 상세 스탯 비교
+  - 교체 전/후 승률 변화 그래프
 
-### 📊 선수 교체 시 승률 예측
-- 타자/투수 교체 시 승률 변화 예측
-- 선수별 상세 스탯 비교
+### 📊 데이터 관리
+- **경기 일정**
+  - 2024 시즌 전체 일정 제공
+  - 날짜별 필터링
 
-### 👥 팀별 라인업 정보 조회
-- 선발 라인업
-- 벤치 선수
-- 불펜 투수
+- **선수 정보**
+  - 타자 스탯 (타율, 홈런, 타점 등)
+  - 투수 스탯 (ERA, 승리, 세이브 등)
+  - 실시간 선수 교체 정보
 
-### 🎥 경기 하이라이트 정보 제공
-- 주요 교체 상황 하이라이트
-- 팀별 점수 표시
+## 📱 화면 구성
+
+### 🏠 메인 화면
+- 일별 경기 일정 표시
+- 날짜 네비게이션
+
+### 🎮 경기 상세 화면
+- 경기 정보 표시
+- 하이라이트 정보
+- 선수 교체 기능
+
+### 🎲 시뮬레이션 화면
+- 선수 선택
+- 승률 예측
+- 결과 표시
+
+## 🏗️ 시스템 아키텍처
+
+### 🔄 아키텍처 패턴
+- MVVM (Model-View-ViewModel) 패턴 사용
+- Repository 패턴으로 데이터 관리
+- ViewBinding을 통한 UI 바인딩
+- Coroutines를 활용한 비동기 처리
+
+### 🧩 주요 컴포넌트
+1. **UI Layer**
+   - Activities: MainActivity, HighlightActivity, MyPickActivity, ResultActivity
+   - Fragments: DailyGamesFragment
+   - ViewModels: 각 화면별 ViewModel
+
+2. **Data Layer**
+   - Repository: GameRepository, HighlightRepository
+   - Models: GameModel, Player, HighlightData
+   - Network: Retrofit을 통한 API 통신
+
+3. **Domain Layer**
+   - Use Cases: 경기 시뮬레이션 로직
+   - Business Logic: 승률 계산, 선수 교체 로직
+
+## 🔄 앱 흐름도
+
+```mermaid
+graph TD
+    A[SplashActivity] -->|인터넷 체크| B[MainActivity]
+    B -->|날짜 선택| C[DailyGamesFragment]
+    C -->|경기 선택| D[HighlightActivity]
+    D -->|선수 교체| E[ChangeMemberActivity]
+    E -->|선수 선택| F[MyPickActivity]
+    F -->|시뮬레이션| G[ResultActivity]
+```
+
+### 📱 주요 화면 흐름
+1. **SplashActivity**
+   - 앱 시작 화면
+   - 인터넷 연결 상태 확인
+   - 로고 애니메이션 표시
+
+2. **MainActivity**
+   - 일별 경기 일정 표시
+   - ViewPager2를 통한 날짜 네비게이션
+
+3. **DailyGamesFragment**
+   - 선택된 날짜의 경기 목록 표시
+   - 경기 상세 정보 제공
+
+4. **HighlightActivity**
+   - 경기 하이라이트 정보 표시
+   - 선수 교체 시점 표시
+
+5. **ChangeMemberActivity**
+   - 선수 교체 기능
+   - 라인업 정보 표시
+
+6. **MyPickActivity**
+   - 선수 선택 및 비교
+   - 시뮬레이션 시작
+
+7. **ResultActivity**
+   - 시뮬레이션 결과 표시
+   - 승률 변화 그래프 표시
+
+## 📊 데이터 흐름
+```mermaid
+graph LR
+    A[API Server] -->|Retrofit| B[Repository]
+    B -->|LiveData| C[ViewModel]
+    C -->|ViewBinding| D[UI]
+    D -->|User Action| E[ViewModel]
+    E -->|Coroutines| B
+```
 
 ## 🛠️ 기술 스택
 <div align="center">
@@ -56,7 +148,7 @@
 ## 🔧 설치 방법
 1. 프로젝트를 클론합니다:
 ```bash
-git clone https://github.com/JongHyun070105/Baseball_Simulation_App.git
+git clone [repository-url]
 ```
 
 2. Android Studio에서 프로젝트를 엽니다.
@@ -68,25 +160,28 @@ git clone https://github.com/JongHyun070105/Baseball_Simulation_App.git
 
 4. 앱을 실행합니다.
 
-## 📖 사용 방법
-1. 메인 화면에서 원하는 날짜의 경기를 선택합니다.
-2. 경기 하이라이트 화면에서 시뮬레이션을 시작할 수 있습니다.
-3. 선수 교체가 필요한 상황에서 교체할 선수를 선택합니다.
-4. 시뮬레이션 결과를 확인합니다.
+## 📈 성능 최적화
 
-## 📁 프로젝트 구조
-```
-app/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/example/baseball_simulation_app/
-│   │   │       ├── API/           # API 관련 클래스
-│   │   │       ├── data/          # 데이터 모델 및 리포지토리
-│   │   │       ├── ui/            # UI 관련 클래스
-│   │   │       └── utils/         # 유틸리티 클래스
-│   │   └── res/                   # 리소스 파일
-```
+### 🖼️ 이미지 최적화
+- Glide를 사용한 이미지 캐싱
+- 이미지 크기 최적화
+- 메모리 관리
+
+### 🌐 네트워크 최적화
+- Retrofit 캐싱
+- API 응답 최적화
+- 오프라인 지원
+
+## 🔐 보안
+
+### 🔒 데이터 보안
+- API 키 보안
+- 사용자 데이터 보호
+- 네트워크 통신 암호화
+
+### 🔑 권한 관리
+- 인터넷 접근 권한
+- 네트워크 상태 확인 권한
 
 ## 📄 라이센스
 이 프로젝트는 MIT 라이센스를 따릅니다.
